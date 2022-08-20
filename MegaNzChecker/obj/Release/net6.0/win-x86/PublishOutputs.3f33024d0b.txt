@@ -1,0 +1,2 @@
+V:\My Project\Checkers VoX DoX\MegaNzChecker\MegaNzChecker\bin\Release\net6.0\publish\win-x86\MegaNzChecker.pdb
+V:\My Project\Checkers VoX DoX\MegaNzChecker\MegaNzChecker\bin\Release\net6.0\publish\win-x86\MegaNzChecker.exe

