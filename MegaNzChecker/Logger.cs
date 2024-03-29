@@ -23,6 +23,7 @@ namespace MegaNzChecker
             {
                 Console.ForegroundColor = (ConsoleColor)type;
             }
+            
             Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}]" + text);
             Console.ResetColor();
         }
